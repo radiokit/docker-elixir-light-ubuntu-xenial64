@@ -3,8 +3,9 @@ FROM ubuntu:xenial
 ENV OTP_VERSION="19.3.6.1"
 ENV REBAR_VERSION="2.6.4"
 ENV REBAR3_VERSION="3.4.1"
-ENV ELIXIR_VERSION="v1.4.5"
+ENV ELIXIR_VERSION="1.4.5"
 ENV LANG=C.UTF-8
+ENV CPATH=/usr/local/lib/erlang/usr/include/
 
 RUN set -ex; \
 	apt-get update && \
@@ -81,7 +82,7 @@ RUN set -xe \
 	&& rm -rf /usr/src/rebar3-src
 
 RUN set -xe \
-	&& ELIXIR_DOWNLOAD_URL="https://github.com/elixir-lang/elixir/releases/download/${ELIXIR_VERSION}/Precompiled.zip" \
+	&& ELIXIR_DOWNLOAD_URL="https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/Precompiled.zip" \
 	&& ELIXIR_DOWNLOAD_SHA256="a740e634e3c68b1477e16d75a0fd400237a46c62ceb5d04551dbc46093a03f98"\
 	&& buildDeps=' \
 		unzip \
@@ -95,4 +96,5 @@ RUN set -xe \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& rm -rf /var/lib/apt/lists/*
 
-
+RUN mix local.hex --force
+RUN mix local.rebar --force
