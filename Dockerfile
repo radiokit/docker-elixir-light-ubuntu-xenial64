@@ -48,7 +48,6 @@ RUN set -xe \
     --without-cosProperty \
     --without-cosTime \
     --without-cosTransactions \
-    --without-wx \
 	&& make -j$(nproc) \
 	&& make install \
 	&& find /usr/local -name examples | xargs rm -rf \
